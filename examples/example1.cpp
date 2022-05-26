@@ -10,10 +10,12 @@ int main()
     EASY_PROFILER_ENABLE;
     spdlog::info("Spdlog is activated!");
 
-    EASY_BLOCK("Block1", profiler::colors::Amber);
-    for (int i = 0; i < 100000; ++i)
+    EASY_BLOCK("Outer block", profiler::colors::Black);
+    for (int i = 0; i < 10; ++i)
     {
-        usleep(10);
+        EASY_BLOCK("Inner block", profiler::colors::Amber);
+        usleep(10000);
+        EASY_END_BLOCK
     }
     EASY_END_BLOCK
 
