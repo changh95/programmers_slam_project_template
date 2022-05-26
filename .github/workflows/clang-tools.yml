@@ -2,7 +2,7 @@ name: clang-format
 on:
   push:
     branches:
-      - masterS
+      - master
   pull_request:
     branches: [ master ]
   workflow_dispatch:
