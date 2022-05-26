@@ -2,3 +2,15 @@
 .idea/
 cmake-build-debug/
 cmake-build-release/
+
+thirdparty/cereal
+thirdparty/ceres
+thirdparty/easy_profiler
+thirdparty/eigen
+thirdparty/gtest
+thirdparty/imgui
+thirdparty/opencv
+thirdparty/pangolin
+thirdparty/spdlog
+
+test_profile.prof
