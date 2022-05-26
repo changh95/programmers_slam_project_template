@@ -2,10 +2,9 @@ name: clang-format
 on:
   push:
     branches:
-      - main
-      - development
+      - masterS
   pull_request:
-    branches: [ development ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
