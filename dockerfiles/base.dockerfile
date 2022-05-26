@@ -39,5 +39,6 @@ RUN pip3 install gitpython
 RUN apt-get autoclean
 
 RUN mkdir slam && cd slam && \
-    git clone
+    git clone https://github.com/changh95/programmers_slam_project_template.git &&\
+    cd programmers_slam_project_template && ./buildDeps.py --d --system
 
