@@ -1,0 +1,48 @@
+Performing C++ SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/parallels/twinny/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/ninja cmTC_5d578 && [1/2] Building CXX object CMakeFiles/cmTC_5d578.dir/src.cxx.o
+[2/2] Linking CXX executable cmTC_5d578
+FAILED: cmTC_5d578 
+: && /usr/bin/c++  -g -O3 -DNDEBUG -fPIC -DCMAKE_HAVE_LIBC_PTHREAD   CMakeFiles/cmTC_5d578.dir/src.cxx.o  -o cmTC_5d578   && :
+/usr/bin/ld: CMakeFiles/cmTC_5d578.dir/src.cxx.o: in function `main':
+/home/parallels/twinny/build/CMakeFiles/CMakeTmp/src.cxx:11: undefined reference to `pthread_create'
+/usr/bin/ld: /home/parallels/twinny/build/CMakeFiles/CMakeTmp/src.cxx:12: undefined reference to `pthread_detach'
+/usr/bin/ld: /home/parallels/twinny/build/CMakeFiles/CMakeTmp/src.cxx:13: undefined reference to `pthread_join'
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/parallels/twinny/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/ninja cmTC_fd97f && [1/2] Building CXX object CMakeFiles/cmTC_fd97f.dir/CheckFunctionExists.cxx.o
+[2/2] Linking CXX executable cmTC_fd97f
+FAILED: cmTC_fd97f 
+: && /usr/bin/c++  -g -O3 -DNDEBUG -fPIC -DCHECK_FUNCTION_EXISTS=pthread_create   CMakeFiles/cmTC_fd97f.dir/CheckFunctionExists.cxx.o  -o cmTC_fd97f  -lpthreads && :
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+
+

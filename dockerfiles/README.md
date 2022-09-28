@@ -12,7 +12,7 @@ To build Base environment, use the command below:
 
 To build SLAM modules, use the command below:
 
-`sudo docker build --no-cache --progress=tty --force-rm -f modules.dockerfile -t slam:modules .`
+`sudo docker build --no-cache --progress=tty --force-rm -f build.dockerfile -t slam:build .`
 
 ---
 

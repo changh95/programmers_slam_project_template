@@ -6,7 +6,7 @@ on:
       - main
       - development
   pull_request:
-    branches: [ development ]
+    branches: [ master ]
 env:
   GET_REPO: export REPO=${GITHUB_REPOSITORY#*/}
   GET_HASH: export HASH=${GITHUB_SHA}
@@ -28,6 +28,7 @@ jobs:
           cd dockerfiles
           sudo docker build --force-rm --no-cache -t "${REPO}:${HASH}" --build-arg BRANCH=${{ github.head_ref }} . -f build.dockerfile
           echo "=== Build finished ==="
+
       - name: If Fail - Clean up Docker image if build fails
         if: failure()
         run: |
