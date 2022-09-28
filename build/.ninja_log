@@ -1,0 +1,11 @@
+# ninja log v5
+1	422	1664336797515125789	modules/module1/test/CMakeFiles/unit_tests.dir/main.cpp.o	11279e1d0bf9d413
+0	426	1664336797519125830	modules/module1/test/CMakeFiles/sample1.dir/main.cpp.o	c108560db67c38de
+1	508	1664336797603126688	modules/module1/test/CMakeFiles/unit_tests.dir/sample1.cpp.o	ebc257e326f7ff44
+0	515	1664336797607126729	modules/module1/test/CMakeFiles/sample1.dir/sample1.cpp.o	2d588c26463dc985
+1	112	1664336821799370033	modules/module1/CMakeFiles/module1.dir/src/Class.cpp.o	5755363f42454f70
+1	18	1664336843779584631	modules/module1/libmodule1.a	c3046a04c34dcbbb
+18	70	1664336843831585132	modules/module1/test/unit_tests	7260fa7f7f283e0b
+18	70	1664336843831585132	modules/module1/test/sample1	34a1fc01ac3f2afd
+1	116	1664336883511957794	CMakeFiles/example1.dir/examples/example1.cpp.o	99fb66c9ebfb5dc
+116	143	1664336883535958014	example1	a1db13967f7eaec4

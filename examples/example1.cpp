@@ -2,13 +2,14 @@
 // Created by changh95 on 5/26/22.
 //
 
+#include <unistd.h>
+
 #include "module1/Class.hpp"
 
 
 int main()
 {
     EASY_PROFILER_ENABLE;
-    spdlog::info("Spdlog is activated!");
 
     EASY_BLOCK("Outer block", profiler::colors::Black);
     for (int i = 0; i < 10; ++i)

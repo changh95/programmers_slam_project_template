@@ -7,6 +7,5 @@
 
 #define USING_EASY_PROFILER
 #include "easy/profiler.h"
-#include "spdlog/spdlog.h"
 
 #endif  // _CLASS_HPP

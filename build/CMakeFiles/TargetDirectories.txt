@@ -1,0 +1,10 @@
+/home/parallels/twinny/build/CMakeFiles/rebuild_cache.dir
+/home/parallels/twinny/build/CMakeFiles/edit_cache.dir
+/home/parallels/twinny/build/CMakeFiles/example1.dir
+/home/parallels/twinny/build/modules/module1/CMakeFiles/rebuild_cache.dir
+/home/parallels/twinny/build/modules/module1/CMakeFiles/edit_cache.dir
+/home/parallels/twinny/build/modules/module1/CMakeFiles/module1.dir
+/home/parallels/twinny/build/modules/module1/test/CMakeFiles/rebuild_cache.dir
+/home/parallels/twinny/build/modules/module1/test/CMakeFiles/edit_cache.dir
+/home/parallels/twinny/build/modules/module1/test/CMakeFiles/sample1.dir
+/home/parallels/twinny/build/modules/module1/test/CMakeFiles/unit_tests.dir
