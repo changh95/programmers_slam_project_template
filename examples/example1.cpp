@@ -9,7 +9,8 @@ int main()
 {
     EASY_PROFILER_ENABLE;
     spdlog::info("Spdlog is activated!");
-
+    spdlog::warn("Spdlog is warning you!");
+    spdlog::error("Spdlog says this program should quit");
     EASY_BLOCK("Outer block", profiler::colors::Black);
     for (int i = 0; i < 10; ++i)
     {
