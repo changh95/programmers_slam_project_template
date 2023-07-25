@@ -22,12 +22,21 @@ build_packages:
       debug : ""
       release :
         - "-DCMAKE_CXX_FLAGS=\"-Ofast\""
-  OpenCV: 
+  OpenCV:
     version_num: 4.5.3
     cmake_flags:
       debug: ""
       release:
         - "-DCMAKE_CXX_FLAGS=\"-Ofast\""
+      contrib:
+        - "-DWITH_CUDA=ON"
+        - "-DWITH_CUDNN=ON"
+        - "-DOPENCV_DNN_CUDA=ON"
+        - "-DCUDA_FAST_MATH=ON"
+        - "-DWITH_CUBLAS=ON"
+        - "-DWITH_CUFFT=ON"
+        - "-DWITH_FFMPEG=ON"
+        - "-DOPENCV_GENERATE_PKGCONFIG=ON"
   Ceres: 
     version_num: 1.14.0
     cmake_flags: 
