@@ -387,13 +387,13 @@ def install_eigen(cfg, enable_debug):
 
 
 def install_opencv(cfg, enable_debug):
-    # TODO(Hyunggi): Check if we need contrib?
-    # TODO(Hyunggi): Check whether we use OpenCV 3 or 4.
+    # TODO: Check whether we use OpenCV 3 or 4.
     os.chdir(pwd)
 
     version_num = cfg['version_num']
     debug_build_flags = ""
     release_build_flags = ""
+    contrib_build_flags = ""
 
     for flag in cfg['cmake_flags']['debug']:
         debug_build_flags += flag
@@ -402,6 +402,10 @@ def install_opencv(cfg, enable_debug):
     for flag in cfg['cmake_flags']['release']:
         release_build_flags += flag
         release_build_flags += " "
+
+    for flag in cfg['cmake_flags']['contrib']:
+        contrib_build_flags += flag
+        contrib_build_flags += " "
 
     try:
         os.system(pw.sudo() + "apt-get -y install ffmpeg")
@@ -417,6 +421,17 @@ def install_opencv(cfg, enable_debug):
         os.system(pw.sudo() + "apt-get -y install libpng-dev")
         os.system(pw.sudo() + "apt-get -y install libtiff-dev")
         os.system(pw.sudo() + "apt-get -y install libdc1394-22-dev")
+        os.system(pw.sudo() + "apt-get -y install libcanberra-gtk-module")
+        os.system(pw.sudo() + "apt-get -y install libcanberra-gtk3-module")
+        if contrib_build_flags != "":
+            os.system(pw.sudo() + "apt-get -y install libgtk2.0-dev")
+            os.system(pw.sudo() + "apt-get -y install libglib2.0-dev")
+            os.system(pw.sudo() + "apt-get -y install libdc1394-22-dev")
+            os.system(pw.sudo() + "apt-get -y install ffmpeg")
+            os.system(pw.sudo() + "apt-get -y install libgtk2.0-dev")
+            os.system(pw.sudo() + "apt-get -y install libgstreamer1.0-dev")
+            os.system(pw.sudo() + "apt-get -y install libgstreamer-plugins-base1.0-dev")
+
         os.system(pw.sudo() + "rm -rf ./thirdparty/opencv")
 
         os.makedirs("./thirdparty/opencv")
@@ -425,24 +440,40 @@ def install_opencv(cfg, enable_debug):
         try:
             urllib.request.urlretrieve(
                 "https://github.com/opencv/opencv/archive/" + version_num + ".zip", "./opencv.zip")
+            if contrib_build_flags != "":
+                urllib.request.urlretrieve(
+                    "https://github.com/opencv/opencv_contrib/archive/" + version_num + ".zip", "./opencv_contrib.zip")
         except urllib.error.HTTPError as e:
             raise Exception("OpenCV: cloning failed")
 
         os.system("unzip ./opencv.zip -d .")
+        if contrib_build_flags != "":
+            os.system("unzip ./opencv_contrib.zip -d .")
 
         os.makedirs("./build/Release", exist_ok=True)
         os.makedirs("./install/Release", exist_ok=True)
         os.chdir("./build/Release")
 
         exec_string = "cmake ../../opencv-" + version_num + " -GNinja"
+        contrib_string = f" -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-{version_num}/modules/"
 
         if install_in_system:
-            if os.system(exec_string + " -DCMAKE_BUILD_TYPE=Release " + release_build_flags) != 0:
-                raise Exception("OpenCV: cmake configuration failed")
+            if contrib_build_flags != "":
+                if os.system(
+                        exec_string + " -DCMAKE_BUILD_TYPE=Release " + release_build_flags + contrib_build_flags + contrib_string) != 0:
+                    raise Exception("OpenCV: cmake configuration failed")
+            else:
+                if os.system(exec_string + " -DCMAKE_BUILD_TYPE=Release " + release_build_flags) != 0:
+                    raise Exception("OpenCV: cmake configuration failed")
         else:
-            if os.system(
-                    exec_string + " -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../install/Release " + release_build_flags) != 0:
-                raise Exception("OpenCV: cmake configuration failed")
+            if contrib_build_flags != "":
+                if os.system(
+                        exec_string + " -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../install/Release " + release_build_flags + contrib_build_flags + contrib_string) != 0:
+                    raise Exception("OpenCV: cmake configuration failed")
+            else:
+                if os.system(
+                        exec_string + " -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../install/Release " + release_build_flags) != 0:
+                    raise Exception("OpenCV: cmake configuration failed")
 
         if os.system("ninja") != 0:
             raise Exception("OpenCV: ninja failed")
@@ -457,12 +488,22 @@ def install_opencv(cfg, enable_debug):
             os.chdir("./build/Debug")
 
             if install_in_system:
-                if os.system(exec_string + " -DCMAKE_BUILD_TYPE=Debug " + debug_build_flags) != 0:
-                    raise Exception("OpenCV: cmake configuration failed")
+                if contrib_build_flags != "":
+                    if os.system(
+                            exec_string + " -DCMAKE_BUILD_TYPE=Debug " + release_build_flags + contrib_build_flags + contrib_string) != 0:
+                        raise Exception("OpenCV: cmake configuration failed")
+                else:
+                    if os.system(exec_string + " -DCMAKE_BUILD_TYPE=Debug " + debug_build_flags) != 0:
+                        raise Exception("OpenCV: cmake configuration failed")
             else:
-                if os.system(
-                        exec_string + " -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../../install/Debug " + debug_build_flags) != 0:
-                    raise Exception("OpenCV: cmake configuration failed")
+                if contrib_build_flags != "":
+                    if os.system(
+                            exec_string + " -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../../install/Debug " + release_build_flags + contrib_build_flags + contrib_string) != 0:
+                        raise Exception("OpenCV: cmake configuration failed")
+                else:
+                    if os.system(
+                            exec_string + " -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../../install/Debug " + debug_build_flags) != 0:
+                        raise Exception("OpenCV: cmake configuration failed")
 
             if os.system("ninja") != 0:
                 raise Exception("OpenCV: ninja failed")
@@ -473,6 +514,8 @@ def install_opencv(cfg, enable_debug):
         os.chdir("../../")
         os.system(pw.sudo() + "rm -rf ./build")
         os.system(pw.sudo() + "rm -rf opencv-" + version_num)
+        if contrib_build_flags != "":
+            os.system(pw.sudo() + "rm -rf opencv_contrib-" + version_num)
     except Exception as e:
         print("")
         sys.exit(e)

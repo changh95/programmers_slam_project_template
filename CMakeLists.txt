@@ -45,6 +45,7 @@ endif ()
 list(APPEND CMAKE_PREFIX_PATH /usr)
 
 # Load libraries
+include(cmake_files/find_cuda.cmake)
 include(cmake_files/find_eigen3)
 include(cmake_files/find_image_exts) # ${IMAGE_LIBS} - png, jpeg, tiff, zlib
 include(cmake_files/find_yaml_cpp)
