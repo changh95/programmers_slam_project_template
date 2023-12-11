@@ -110,7 +110,7 @@ class YAMLparser:
 
 def install_linux_packages():
     libs_string = "unzip wget curl git build-essential cmake ninja-build gcc clang-format"
-    os.system(pw.sudo() + "apt-get -y install " + libs_string)
+    os.system(pw.sudo() + "apt -y install " + libs_string)
 
 
 def install_cpp_packages():
@@ -138,7 +138,7 @@ def install_cpp_packages():
     if cfg.json:
         libs_string += "libjsoncpp-dev "
 
-    os.system(pw.sudo() + "apt-get -y install " + libs_string)
+    os.system(pw.sudo() + "apt -y install " + libs_string)
 
 
 def install_build_packages(enable_debug):
@@ -237,9 +237,9 @@ def install_pangolin(cfg, enable_debug):
         release_build_flags += " "
 
     try:
-        os.system(pw.sudo() + "apt-get -y install libglvnd-dev")
-        os.system(pw.sudo() + "apt-get -y install libgl1-mesa-dev")
-        os.system(pw.sudo() + "apt-get -y install libegl1-mesa-dev")
+        os.system(pw.sudo() + "apt -y install libglvnd-dev")
+        os.system(pw.sudo() + "apt -y install libgl1-mesa-dev")
+        os.system(pw.sudo() + "apt -y install libegl1-mesa-dev")
 
         os.system(pw.sudo() + "rm -rf ./thirdparty/pangolin")
 
@@ -320,9 +320,9 @@ def install_eigen(cfg, enable_debug):
         release_build_flags += " "
 
     try:
-        os.system(pw.sudo() + "apt-get -y install libblas-dev")
-        os.system(pw.sudo() + "apt-get -y install libatlas-base-dev")
-        os.system(pw.sudo() + "apt-get -y install liblapack-dev")
+        os.system(pw.sudo() + "apt -y install libblas-dev")
+        os.system(pw.sudo() + "apt -y install libatlas-base-dev")
+        os.system(pw.sudo() + "apt -y install liblapack-dev")
         os.system(pw.sudo() + "rm -rf ./thirdparty/eigen")
 
         os.makedirs("./thirdparty/eigen")
@@ -404,19 +404,19 @@ def install_opencv(cfg, enable_debug):
         release_build_flags += " "
 
     try:
-        os.system(pw.sudo() + "apt-get -y install ffmpeg")
-        os.system(pw.sudo() + "apt-get -y install libgtk2.0-dev")
-        os.system(pw.sudo() + "apt-get -y install pkg-config")
-        os.system(pw.sudo() + "apt-get -y install libavcodec-dev")
-        os.system(pw.sudo() + "apt-get -y install libswscale-dev")
-        os.system(pw.sudo() + "apt-get -y install python-dev")
-        os.system(pw.sudo() + "apt-get -y install python-numpy")
-        os.system(pw.sudo() + "apt-get -y install libtbb2")
-        os.system(pw.sudo() + "apt-get -y install libtbb-dev")
-        os.system(pw.sudo() + "apt-get -y install libjpeg-dev")
-        os.system(pw.sudo() + "apt-get -y install libpng-dev")
-        os.system(pw.sudo() + "apt-get -y install libtiff-dev")
-        os.system(pw.sudo() + "apt-get -y install libdc1394-22-dev")
+        os.system(pw.sudo() + "apt -y install ffmpeg")
+        os.system(pw.sudo() + "apt -y install libgtk2.0-dev")
+        os.system(pw.sudo() + "apt -y install pkg-config")
+        os.system(pw.sudo() + "apt -y install libavcodec-dev")
+        os.system(pw.sudo() + "apt -y install libswscale-dev")
+        os.system(pw.sudo() + "apt -y install python-dev")
+        os.system(pw.sudo() + "apt -y install python-numpy")
+        os.system(pw.sudo() + "apt -y install libtbb2")
+        os.system(pw.sudo() + "apt -y install libtbb-dev")
+        os.system(pw.sudo() + "apt -y install libjpeg-dev")
+        os.system(pw.sudo() + "apt -y install libpng-dev")
+        os.system(pw.sudo() + "apt -y install libtiff-dev")
+        os.system(pw.sudo() + "apt -y install libdc1394-22-dev")
         os.system(pw.sudo() + "rm -rf ./thirdparty/opencv")
 
         os.makedirs("./thirdparty/opencv")
@@ -494,11 +494,11 @@ def install_ceres(cfg, enable_debug):
         release_build_flags += " "
 
     try:
-        os.system(pw.sudo() + "apt-get -y install libgoogle-glog-dev")
-        os.system(pw.sudo() + "apt-get -y install libgflags-dev")
-        os.system(pw.sudo() + "apt-get -y install libatlas-base-dev")
-        os.system(pw.sudo() + "apt-get -y install libsuitesparse-dev")
-        os.system(pw.sudo() + "apt-get -y install libpthread-stubs0-dev")
+        os.system(pw.sudo() + "apt -y install libgoogle-glog-dev")
+        os.system(pw.sudo() + "apt -y install libgflags-dev")
+        os.system(pw.sudo() + "apt -y install libatlas-base-dev")
+        os.system(pw.sudo() + "apt -y install libsuitesparse-dev")
+        os.system(pw.sudo() + "apt -y install libpthread-stubs0-dev")
 
         os.system(pw.sudo() + "rm -rf ./thirdparty/ceres")
 
@@ -646,7 +646,7 @@ def install_easy_profiler(cfg, enable_debug):
         release_build_flags += " "
 
     try:
-        os.system(pw.sudo() + "apt-get -y install qt5-default")
+        os.system(pw.sudo() + "apt -y install qt5-default")
         os.system(pw.sudo() + "rm -rf ./thirdparty/easy_profiler")
 
         os.makedirs("./thirdparty/easy_profiler")

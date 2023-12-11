@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+  develop:
+    image: ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
+    container_name: ${BASE_CONTAINER_NAME}
+    stdin_open: false # -i option. docker-compose run 을 실행한 후 자동으로 종료되지 않도록
+    tty: false # -t option. docker-compose run 을 실행한 후 자동으로 종료되지 않도록
+    privileged: true # 일부 하드웨어 파일 등에 접근 시 sudo 권한을 요구하지 않도록
+    shm_size: ${MEMORY_SIZE_GB}GB
+    build:
+      context: ./dockerfiles
+      dockerfile: slam-base.dockerfile
+    environment:
+      # X settings
+      ## for Unix-like, 2 options.
+      # - DISPLAY=${HOSTNAME}:0 # run `export HOSTNAME=example && xhost + ${HOSTNAME}` before running docker-compose.
+      # - DISPLAY=host.docker.internal:0 # run `xhost + 127.0.0.1` before running docker-compose.
+      ## for macOS, 3 options.
+      # - DISPLAY=${HOSTNAME}:0 # run `export HOSTNAME=example && xhost + ${HOSTNAME}` before running docker-compose.
+      # - DISPLAY=host.docker.internal:0 # run `xhost + 127.0.0.1` before running docker-compose.
+      - DISPLAY=docker.for.mac.host.internal:0 # run `xhost + localhost` before running docker-compose.
+      - QT_X11_NO_MITSHM=1 # X 클라이언트의 환경에 GPU가 있는 등, 화면 출력을 위해 QT 기반의 하드웨어 가속을 사용하는 경우가 있음. 이것을 비활성화.
+    volumes:
+      # X settings
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+  orb-slam2:
+    depends_on:
+      - develop
+    image: orb-slam:v2
+    container_name: orb-slam2
+    stdin_open: false # -i option
+    tty: false # -t option
+    privileged: true
+    build:
+      context: ./dockerfiles
+      dockerfile: orb-slam2.dockerfile
+      args:
+        - IMAGE=${BASE_IMAGE_NAME}
+        - TAG=${BASE_IMAGE_TAG}
+    environment:
+      # X settings
+      ## for Unix-like, 2 options.
+      # - DISPLAY=${HOSTNAME}:0 # run `export HOSTNAME=example && xhost + ${HOSTNAME}` before running docker-compose.
+      # - DISPLAY=host.docker.internal:0 # run `xhost + 127.0.0.1` before running docker-compose.
+      ## for macOS, 3 options.
+      # - DISPLAY=${HOSTNAME}:0 # run `export HOSTNAME=example && xhost + ${HOSTNAME}` before running docker-compose.
+      # - DISPLAY=host.docker.internal:0 # run `xhost + 127.0.0.1` before running docker-compose.
+      - DISPLAY=docker.for.mac.host.internal:0 # run `xhost + localhost` before running docker-compose.
+      - QT_X11_NO_MITSHM=1 # X 클라이언트의 환경에 GPU가 있는 등, 화면 출력을 위해 QT 기반의 하드웨어 가속을 사용하는 경우가 있음. 이것을 비활성화.
+    volumes:
+      - ${PWD}/volume:/root/volume/
+      # X settings
+      - /tmp/.X11-unix:/tmp/.X11-unix
